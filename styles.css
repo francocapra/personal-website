@@ -133,18 +133,43 @@ nav {
 
 .social-links {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.social-link {
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
 }
 
 .social-icon {
     color: white;
     font-size: 1.5rem;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: auto;
 }
 
-.social-icon:hover {
+.social-link:hover .social-icon {
     transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.social-links a {
+    display: block;
+    width: 50px;
+    height: 50px;
 }
 
 /* Sections */
@@ -345,6 +370,41 @@ section h2 {
 .contact button:hover {
     background: var(--secondary-color);
     transform: translateY(-3px);
+}
+
+.contact-info {
+    max-width: 600px;
+    margin: 2rem auto 0;
+    padding: 1.5rem;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+}
+
+.contact-item i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    width: 24px;
+    text-align: center;
+}
+
+.contact-item a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+    color: var(--primary-color);
 }
 
 /* Footer */
