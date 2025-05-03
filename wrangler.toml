@@ -1,10 +1,13 @@
+name = "franco-capra-portfolio"
+
+# Configuração para sites estáticos
 [site]
 bucket = "./"
-entry-point = "."
 
+# Configuração de build
 [build]
 command = ""
-upload.format = "directory"
 
-[env.production]
-name = "franco-capra-portfolio"
+# Configuração de upload
+[site.upload]
+format = "directory"
