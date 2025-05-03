@@ -12,6 +12,12 @@ Thumbs.db
 node_modules/
 jspm_packages/
 
+# TypeScript build output
+dist/
+*.js.map
+# Ignore compiled JS if present
+assets/js/*.js
+
 # Build outputs
 dist/
 build/
