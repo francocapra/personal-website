@@ -1,13 +1,3 @@
 name = "franco-capra-portfolio"
-
-# Configuração para sites estáticos
-[site]
-bucket = "./"
-
-# Configuração de build
-[build]
-command = ""
-
-# Configuração de upload
-[site.upload]
-format = "directory"
+pages_build_output_dir = "./"
+compatibility_date = "2025-05-03"
