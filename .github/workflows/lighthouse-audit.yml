@@ -43,7 +43,7 @@ jobs:
         with:
           urls: |
             http://localhost:5000/
-          uploadArtifacts: true
+          uploadArtifacts: false
           temporaryPublicStorage: true # Required for direct outputs like links and scores
 
       # Removed the problematic 'Processar resultados do Lighthouse' step
@@ -137,16 +137,16 @@ jobs:
             // Verificar se algum score está abaixo do threshold
             let failedMetrics = [];
             if (performance < thresholds.performance) {
-              failedMetrics.push(\`Performance: ${Math.round(performance * 100)} (threshold: ${Math.round(thresholds.performance * 100)})\`);
+              failedMetrics.push(`Performance: ${Math.round(performance * 100)} (threshold: ${Math.round(thresholds.performance * 100)})`);
             }
             if (accessibility < thresholds.accessibility) {
-              failedMetrics.push(\`Acessibilidade: ${Math.round(accessibility * 100)} (threshold: ${Math.round(thresholds.accessibility * 100)})\`);
+              failedMetrics.push(`Acessibilidade: ${Math.round(accessibility * 100)} (threshold: ${Math.round(thresholds.accessibility * 100)})`);
             }
             if (bestPractices < thresholds['best-practices']) {
-              failedMetrics.push(\`Melhores Práticas: ${Math.round(bestPractices * 100)} (threshold: ${Math.round(thresholds['best-practices'] * 100)})\`);
+              failedMetrics.push(`Melhores Práticas: ${Math.round(bestPractices * 100)} (threshold: ${Math.round(thresholds['best-practices'] * 100)})`);
             }
             if (seo < thresholds.seo) {
-              failedMetrics.push(\`SEO: ${Math.round(seo * 100)} (threshold: ${Math.round(thresholds.seo * 100)})\`);
+              failedMetrics.push(`SEO: ${Math.round(seo * 100)} (threshold: ${Math.round(thresholds.seo * 100)})`);
             }
 
             // Criar issue se houver métricas abaixo do threshold
@@ -155,19 +155,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: '🚨 Alerta de Performance: Métricas Lighthouse abaixo do threshold',
-                body: \`## Alerta de Performance
-
-                As seguintes métricas estão abaixo dos thresholds definidos:
-
-                \${failedMetrics.map(metric => \`- \${metric}\`).join('\\n')}
-
-                ### 🔍 Detalhes
-
-                - [Relatório Lighthouse Completo](${reportUrl})
-                - _Resultados detalhados também estão disponíveis nos artefatos da execução._
-
-                Por favor, verifique e corrija os problemas de performance.
-                \`,
+                body: `## Alerta de Performance\n\n                As seguintes métricas estão abaixo dos thresholds definidos:\n\n                ${failedMetrics.map(metric => `- ${metric}`).join('\\n')}\n\n                ### 🔍 Detalhes\n\n                - [Relatório Lighthouse Completo](${reportUrl})\n                - _Resultados detalhados também estão disponíveis nos artefatos da execução._\n\n                Por favor, verifique e corrija os problemas de performance.\n                `,
                 labels: ['performance', 'automated', 'bug']
               });
             }
