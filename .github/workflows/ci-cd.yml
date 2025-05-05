@@ -67,7 +67,10 @@ jobs:
         run: npx prettier --check .
 
       - name: Executar ESLint
-        run: npx eslint . --ext .js,.ts
+        run: |
+          echo "ESLint Version: $(npx eslint --version)"
+          echo "Config File Path: $(pwd)/eslint.config.mjs"
+          npx eslint -c eslint.config.mjs . --ext .js,.ts
 
   # Trabalho de verificação final - garante que o código está pronto para deploy
   verify:
