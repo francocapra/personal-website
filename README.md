@@ -6,37 +6,38 @@ Este projeto é um portfólio pessoal moderno, responsivo e fácil de manter, ut
 
 ```
 personal-website/
-├── assets/
-│   └── img/          (para imagens)
-├── index.html        (estrutura principal do site)
-├── styles.css        (estilos CSS)
-├── script.js         (funcionalidades interativas)
-├── README.md
-├── .gitignore
-├── wrangler.toml     (configuração do Cloudflare Pages)
-├── _headers          (configuração de cabeçalhos HTTP)
-└── .github/          (configurações de CI/CD)
+├── assets/           # Imagens
+├── index.html        # Estrutura principal
+├── styles.css        # CSS global e imports
+├── script.js         # Importa módulos JS
+├── sections/         # CSS modular por seção
+├── components/       # CSS modular de componentes
+├── modules/          # JS modular
+├── docs/             # Documentação detalhada
+├── ...
 ```
+
+- CSS e JS são modularizados conforme as melhores práticas.
+- Documentação detalhada está em `/docs`.
 
 ## Como rodar localmente
 
 1. Clone o repositório
-2. Você pode rodar o projeto de duas maneiras:
+2. Instale as dependências para testes e lint:
 
-   **Usando Python:**
-
+   ```bash
+   npm install
    ```
+
+3. Inicie um servidor local para visualizar o site (exemplo usando Python):
+
+   ```bash
    python3 -m http.server 8000
    ```
 
-   **Usando o servidor Node.js incluído:**
+4. Acesse http://localhost:8000
 
-   ```
-   npm install
-   npm run serve
-   ```
-
-3. Acesse http://localhost:8000 (ou a porta indicada pelo servidor)
+> O site funciona apenas com arquivos estáticos (HTML, CSS, JS puro). Não é necessário nenhum build ou transpilação.
 
 ## Deploy
 
@@ -44,20 +45,25 @@ O deploy é feito automaticamente pelo Cloudflare Pages ao subir alterações no
 
 ## Desenvolvimento
 
-- O projeto utiliza ESLint e Prettier para manter a qualidade do código
-- Hooks do Git (Husky) são utilizados para garantir que o código esteja formatado antes de cada commit
-- Testes automatizados podem ser executados com `npm test`
+- O projeto utiliza ESLint e Prettier para manter a qualidade e formatação do código.
+- Husky executa testes Playwright automaticamente antes de cada commit.
+- Testes automatizados podem ser executados com `npm test`.
 
 ## Características
 
 - Design responsivo para todos os tamanhos de tela
 - Modo claro/escuro com detecção automática de preferência do sistema
-- Navegação suave com rolagem animada
+- Navegação suave
 - Formulário de contato funcional
-- Otimizado para SEO e acessibilidade
+- Otimizado para SEO e acessibilidade (testes Playwright/axe-core)
+- Estrutura modular de CSS e JS para facilitar manutenção e colaboração por IA
+- **Acessibilidade garantida:** contraste de cores revisado e testado automaticamente (WCAG 2 AA)
+- Código semântico, landmarks e roles apropriados
 
 ---
 
-- Os arquivos principais (HTML, CSS, JS) estão na raiz para facilitar a manutenção
-- Imagens devem ser colocadas em `assets/img/`
-- O arquivo `wrangler.toml` está configurado para Cloudflare Pages
+## Documentation
+
+- [Documentation Index](docs/README.md)
+
+Para todas as convenções, regras e guias detalhados, consulte a documentação acima.

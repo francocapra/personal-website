@@ -1,0 +1,39 @@
+/* Projects Section Styles */
+.projects {
+  background: var(--bg-color);
+  padding: 5rem 1rem;
+}
+.projects-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.project-card {
+  background: var(--card-bg);
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  border-radius: 8px;
+  width: 300px;
+  transition: transform 0.2s;
+}
+.project-card:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+
+/* Removed empty .skills-grid ruleset */
+
+.skill-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Removed empty .skill-card h3 ruleset */

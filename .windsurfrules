@@ -1,35 +1,57 @@
-# General Code Style & Formatting
-- Use functional and declarative programming patterns; avoid classes.
-- Prefer iteration and modularization over code duplication.
-- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
-- Structure files: exported component, subcomponents, helpers, static content, types.
-- Follow Expo's official documentation for setting up and configuring projects.
+# Project: Personal Website — Rules & Conventions
 
-# Naming Conventions
-- Use lowercase with dashes for directories (e.g., components/auth-wizard).
-- Favor named exports for components.
+## Code Style & Formatting
 
-# TypeScript Best Practices
-- Use TypeScript for all code; prefer interfaces over types.
-- Avoid any and enums; use explicit types and maps instead.
-- Use functional components with TypeScript interfaces.
-- Enable strict mode in TypeScript for better type safety.
+- Use HTML, CSS, and modular JavaScript as the foundation of the project.
+- Prefer small, pure, and reusable functions; avoid long functions or files.
+- Use functional and declarative patterns in JavaScript; avoid classes.
+- Separate responsibilities: each function, CSS block, or HTML section should have a clear purpose.
+- Use CSS variables and Flexbox for responsiveness.
+- Maintain consistent indentation (2 spaces for HTML/CSS/JS).
+- Use ESLint and Prettier to ensure automatic quality and consistency.
 
-# Syntax & Formatting
-- Use the function keyword for pure functions.
-- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
-- Use declarative JSX.
-- Use Prettier for consistent code formatting.
+## Modularization & Files
 
-# Styling & UI
-- Use Expo's built-in components for common UI patterns and layouts.
-- Implement responsive design with Flexbox and useWindowDimensions.
-- Use styled-components or Tailwind CSS for styling.
-- Implement dark mode support using Expo's useColorScheme.
-- Ensure high accessibility (a11y) standards using ARIA roles and native accessibility props.
-- Use react-native-reanimated and react-native-gesture-handler for performant animations and gestures.
+- Avoid long files: split code into smaller, thematic files (e.g., sections/, components/, utils/).
+- JavaScript: separate utilities, helpers, and specific logic into dedicated files under utils/ or modules/.
+- CSS: modularize styles by section or component, importing them into the main file.
+- HTML: use includes or partials (e.g., with Eleventy or another static site generator) for large sections.
+- Tests: keep test files short and organized by feature or page.
 
-# Project Structure
-- Use the README.md file to document the project.
-- Always update the .windsurfrules file with any new changes to the project structure.
-- This projects is deployed to Cloudflare Pages, and integrated with GitHub.
+## Naming Conventions
+
+- Use English, descriptive, kebab-case names for folders.
+- Use camelCase for variables and functions in JavaScript.
+- Use clear names without unnecessary abbreviations.
+
+## Best Practices
+
+- Favor simple solutions using basic technologies, but allow modern tools (TypeScript, preprocessors, etc.) when they increase clarity, safety, or maintainability.
+- Avoid heavy dependencies by default, but do not forbid technologies like Tailwind, React, Vue, Expo, or TypeScript if justified.
+- Keep code accessible and semantically correct.
+- Implement and maintain light/dark themes via CSS and JS.
+- Ensure responsiveness across all devices.
+- Use Playwright tests to validate accessibility, responsiveness, and integrity.
+
+## Optimization for Artificial Intelligence
+
+- Smaller and modular files facilitate analysis, refactoring, and automation by AI agents.
+- Clear comments and local documentation help AI understand the purpose of each module.
+- Avoid complex logic in a single place; break it into distinct functions and files.
+- Always update documentation after modularization or refactoring.
+
+## Automation & CI/CD
+
+- Use Husky to run Playwright tests before each commit.
+- Automatically deploy via Cloudflare Pages when updating the main branch.
+- Keep CI/CD workflows updated in .github/.
+
+## Documentation
+
+- Keep README.md always up to date.
+- Document new rules and decisions in this file.
+- Update or remove outdated guides that no longer reflect the state of the project.
+
+## Updates
+
+- Always review this file after structural or procedural changes.

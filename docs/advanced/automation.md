@@ -45,11 +45,13 @@ Verifica a conformidade com padrões de acessibilidade:
 ## Benefícios da Implementação
 
 1. **Qualidade Garantida**
+
    - Testes automatizados em cada commit
    - Verificações de acessibilidade e performance
    - Padrões de código consistentes
 
 2. **Produtividade Aumentada**
+
    - Feedback rápido para desenvolvedores
    - Automação de tarefas repetitivas
    - Documentação clara de problemas
@@ -81,11 +83,13 @@ Os resultados de todas as execuções podem ser visualizados na aba "Actions" do
 Cada workflow pode ser personalizado conforme necessário:
 
 1. **CI/CD Pipeline**
+
    - Ajuste os comandos de teste
    - Modifique as verificações de linting
    - Personalize as configurações de deploy
 
 2. **GitHub MCP**
+
    - Adicione novos comandos
    - Refine a lógica de categorização
    - Personalize as respostas automáticas

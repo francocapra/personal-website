@@ -47,6 +47,7 @@ Os testes de acessibilidade usam `@axe-core/playwright` para verificar violaçõ
 ### Responsividade
 
 Os testes de responsividade verificam se o site carrega corretamente em diferentes tamanhos de tela:
+
 - Mobile (375x667)
 - Tablet (768x1024)
 - Desktop (1280x800)
@@ -75,6 +76,7 @@ npx lighthouse http://localhost:5000 --view
 ## Resolução de Problemas
 
 Se os testes falharem com erros relacionados a elementos não encontrados:
+
 1. Verifique se o servidor estático está funcionando corretamente
 2. Aumente os timeouts para páginas com muitas animações
 3. Use `page.waitForLoadState('networkidle')` para garantir carregamento completo

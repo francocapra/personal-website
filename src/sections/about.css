@@ -1,0 +1,31 @@
+/* About Section Styles */
+.about {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.65
+  ); /* lighter and more transparent for overlap */
+  padding: 5rem 1rem;
+}
+[data-theme='dark'] .about {
+  background: rgba(34, 34, 34, 0.65);
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--text-color);
+  text-align: center;
+}
+.certifications,
+.languages {
+  margin-top: 2rem;
+}
+.certifications h3,
+.languages h3,
+.skill-card > h3 {
+  color: #14508e !important;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}

@@ -1,0 +1,48 @@
+/* Contact Section Styles */
+.contact {
+  background: var(--light-bg);
+  padding: 5rem 1rem;
+}
+.contact form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.contact input,
+.contact textarea {
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+}
+.contact button {
+  background: #14508e !important;
+  color: #fff !important;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.contact button:hover {
+  background: var(--accent-color);
+}
+
+/* Specific styles for contact links to fix contrast */
+.contact-item a {
+  /* Override global link styles if needed */
+  /* Remove text-shadow causing contrast issues in light mode */
+  text-shadow: none;
+  /* Use a darker blue for better contrast in light mode */
+  color: #1f78b4;
+}
+
+/* Restore primary color link for dark theme if needed */
+[data-theme='dark'] .contact-item a {
+  color: var(--primary-color); /* Or specific dark theme link color */
+}
+
+/* Removed empty dark theme ruleset */

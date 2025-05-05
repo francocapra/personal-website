@@ -1,0 +1,67 @@
+/* Hero Section Styles */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  /* Use 100% width */
+  width: 100%;
+  /* Override general section constraints */
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  /* Make hero background transparent, rely on ::before overlay */
+  background: transparent;
+  /* background: var(--section-bg-overlay); -- This would be inherited but we override */
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  /* Use inset shorthand for positioning */
+  inset: 0;
+  /* Restore theme-aware background overlay */
+  background-color: var(--bg-color);
+  opacity: 0.6;
+  /* Background image is now on body */
+  z-index: -1;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+.hero-content h2 {
+  font-size: 2rem;
+  color: var(--secondary-color);
+  margin-bottom: 2rem;
+}
+.social-links {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem; /* Increased gap slightly for spacing */
+}
+.social-link .social-icon {
+  background: var(--primary-color);
+  color: var(--primary-color); /* Changed from white to primary */
+  border-radius: 50%;
+  padding: 0.75rem;
+  font-size: 1.8rem; /* Increased size slightly */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.3s,
+    transform 0.3s ease;
+}
+.social-link .social-icon:hover {
+  background: var(--accent-color);
+  color: var(--accent-color); /* Change color on hover */
+  transform: translateY(-5px);
+}

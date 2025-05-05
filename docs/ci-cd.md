@@ -5,6 +5,7 @@ Este guia explica como implementar e configurar o pipeline de Integração Cont�
 ## Visão Geral do Pipeline
 
 O pipeline de CI/CD implementado automatiza:
+
 - Execução de testes (acessibilidade, responsividade)
 - Verificação de qualidade de código (linting, formatação)
 - Deploy automático para Cloudflare Pages
@@ -25,19 +26,19 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
     # Executa testes automatizados
     ...
-  
+
   lint:
     # Verifica qualidade do código
     ...
-  
+
   deploy:
     # Realiza o deploy para Cloudflare Pages
     ...
@@ -107,10 +108,12 @@ Você pode personalizar o workflow conforme necessário:
 ## Como Funciona o Pipeline
 
 1. **Quando acionado:**
+
    - Em cada push para a branch main
    - Em cada pull request para a branch main
 
 2. **Job de Testes:**
+
    - Faz checkout do código
    - Configura Node.js
    - Instala dependências
@@ -119,12 +122,14 @@ Você pode personalizar o workflow conforme necessário:
    - Armazena relatórios de teste como artefatos
 
 3. **Job de Linting:**
+
    - Verifica a formatação do código com Prettier
    - Executa ESLint para garantir qualidade do código
 
 4. **Job: Verificação Final**
 
 Este job:
+
 - Só executa quando os testes e linting passam
 - Só executa em pushes para a branch main
 - Confirma que o código está pronto para deploy

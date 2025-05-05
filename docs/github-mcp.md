@@ -18,6 +18,7 @@ O arquivo `.github/workflows/github-mcp.yml` configura as seguintes automações
 ### 1. Análise de Pull Requests
 
 Quando uma PR é aberta ou atualizada, a IA:
+
 - Analisa os arquivos modificados
 - Identifica tipos de alterações
 - Fornece feedback sobre a extensão das mudanças
@@ -26,6 +27,7 @@ Quando uma PR é aberta ou atualizada, a IA:
 ### 2. Processamento de Issues
 
 Quando uma nova issue é aberta, a IA:
+
 - Categoriza automaticamente com base no título e conteúdo
 - Adiciona labels apropriadas (bug, enhancement, etc.)
 - Responde com orientações específicas ao tipo de issue
@@ -34,6 +36,7 @@ Quando uma nova issue é aberta, a IA:
 ### 3. Comandos em Comentários
 
 Os usuários podem interagir com a IA através de comentários usando comandos:
+
 - `/help` - Exibe lista de comandos disponíveis
 - `/label bug` - Adiciona label de bug
 - `/label enhancement` - Adiciona label de melhoria
@@ -42,6 +45,7 @@ Os usuários podem interagir com a IA através de comentários usando comandos:
 ## Como Funciona
 
 O workflow é acionado por eventos específicos:
+
 - Criação ou edição de issues
 - Abertura ou atualização de PRs
 - Novos comentários em issues
@@ -52,11 +56,13 @@ A IA analisa o contexto do evento e executa ações apropriadas usando o GitHub 
 ## Benefícios para o Projeto
 
 1. **Produtividade Aumentada**
+
    - Triagem automática de issues
    - Feedback rápido em PRs
    - Redução de tarefas repetitivas
 
 2. **Consistência**
+
    - Aplicação uniforme de labels
    - Respostas padronizadas
    - Análise sistemática de código
@@ -71,10 +77,12 @@ A IA analisa o contexto do evento e executa ações apropriadas usando o GitHub 
 Você pode personalizar a integração MCP:
 
 1. **Adicionar Novos Comandos**
+
    - Edite o script para reconhecer comandos adicionais
    - Implemente novas ações em resposta aos comandos
 
 2. **Refinar a Análise de Código**
+
    - Adicione verificações específicas para seu projeto
    - Personalize as mensagens de feedback
 
@@ -96,12 +104,14 @@ Para aprimorar ainda mais a integração MCP:
 ### Exemplo 1: Abertura de Issue de Bug
 
 Quando alguém abre uma issue com "bug" no título, a IA:
+
 1. Adiciona labels `bug` e `triage-needed`
 2. Responde solicitando passos para reproduzir, comportamento esperado, etc.
 
 ### Exemplo 2: Comando em Comentário
 
 Quando alguém comenta `/label question` em uma issue:
+
 1. A IA adiciona a label `question` à issue
 2. Confirma a adição com um comentário
 
