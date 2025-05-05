@@ -2,24 +2,18 @@
   "name": "personal-website",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "build:css": "npx tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css",
-    "build": "tsup",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "serve": "serve",
+    "test": "playwright test"
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
-    "@tailwindcss/cli": "^4.1.5",
-    "@typescript-eslint/eslint-plugin": "^8.31.1",
-    "@typescript-eslint/parser": "^8.31.1",
-    "autoprefixer": "^10.4.21",
+    "@playwright/test": "^1.40.0",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.2",
-    "eslint-import-resolver-typescript": "^4.3.4",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
@@ -27,20 +21,15 @@
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
-    "postcss": "^8.5.3",
     "prettier": "^3.0.0",
-    "serve": "^14.2.4",
-    "tailwindcss": "^4.1.5",
-    "tsup": "^8.0.0",
-    "typescript": "^5.4.0",
-    "typescript-eslint": "^8.31.1"
+    "serve": "^14.2.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{js,html,css}": [
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,md,css,html}": [
+    "*.{json,md}": [
       "prettier --write"
     ]
   }

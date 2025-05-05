@@ -5,9 +5,8 @@ import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default [
   {
     // Global ignores
     ignores: [
@@ -23,9 +22,6 @@ export default tseslint.config(
   // Base recommended configuration from ESLint
   eslintJs.configs.recommended,
 
-  // TypeScript configurations
-  ...tseslint.configs.recommended,
-
   // Configuration for JS/MJS files (Browser environment)
   {
     files: ['**/*.{js,mjs}'],
@@ -38,14 +34,13 @@ export default tseslint.config(
     },
     rules: {
       // Add specific rules for JS/MJS if needed
-      '@typescript-eslint/no-unused-expressions': 'warn', // Apply specific TS rules if needed, or disable
       'no-undef': 'error',
     },
   },
 
   // React configurations (using the new flat config structure)
   {
-    files: ['**/*.{jsx,tsx}'],
+    files: ['**/*.jsx'],
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
@@ -77,15 +72,12 @@ export default tseslint.config(
 
   // Import plugin configuration
   {
-    files: ['**/*.{js,jsx,ts,tsx,mjs}'], // Apply to all relevant files
+    files: ['**/*.{js,jsx,mjs}'], // Apply to all relevant files
     plugins: {
       import: importPlugin,
     },
     settings: {
       'import/resolver': {
-        typescript: {
-          project: './tsconfig.json', // Explicitly point to tsconfig
-        },
         node: true,
       },
     },
@@ -115,9 +107,9 @@ export default tseslint.config(
     },
   },
 
-  // Custom rules and overrides for all JS/TS files
+  // Custom rules and overrides for all JS files
   {
-    files: ['**/*.{js,jsx,ts,tsx,mjs}'], // Apply globally or adjust as needed
+    files: ['**/*.{js,jsx,mjs}'], // Apply globally or adjust as needed
     languageOptions: {
       globals: {
         // Already defined more specifically above, can remove general browser/node here if desired
@@ -129,16 +121,10 @@ export default tseslint.config(
     rules: {
       // Base ESLint rules
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'no-unused-vars': 'off', // Disabled in favor of TypeScript rule
-
-      // TypeScript rules overrides
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
 
       // Apply Prettier recommended rules to disable conflicting style rules
       ...prettierConfig.rules,
     },
-  }
-);
+  },
+];
