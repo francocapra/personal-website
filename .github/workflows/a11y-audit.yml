@@ -1,0 +1,130 @@
+name: Accessibility Audit
+
+on:
+  # Executa em pushes para main
+  push:
+    branches: [ main ]
+  # Executa em PRs para main
+  pull_request:
+    branches: [ main ]
+  # Permite execução manual
+  workflow_dispatch:
+  # Executa semanalmente para monitoramento contínuo
+  schedule:
+    - cron: '0 0 * * 3' # Toda quarta-feira à meia-noite
+
+jobs:
+  a11y-audit:
+    name: Accessibility Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+      
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Instalar dependências
+        run: npm ci
+      
+      - name: Instalar Playwright
+        run: npx playwright install --with-deps chromium
+      
+      - name: Iniciar servidor
+        run: |
+          npm install -g serve
+          serve -s . -l 5000 --single &
+          sleep 5
+      
+      - name: Executar testes de acessibilidade
+        id: a11y
+        run: |
+          # Executa apenas o teste de acessibilidade
+          npx playwright test tests/accessibility.spec.ts --reporter=json > a11y-results.json || true
+          
+          # Verifica se o arquivo existe
+          if [ -f "a11y-results.json" ]; then
+            echo "::set-output name=result::$(cat a11y-results.json)"
+            
+            # Conta violações
+            VIOLATIONS=$(cat a11y-results.json | grep -o "violations" | wc -l)
+            echo "::set-output name=violations::$VIOLATIONS"
+          else
+            echo "::set-output name=result::Error: No results file"
+            echo "::set-output name=violations::0"
+          fi
+      
+      - name: Armazenar resultados como artefato
+        uses: actions/upload-artifact@v3
+        with:
+          name: a11y-results
+          path: |
+            a11y-results.json
+            test-results/
+          retention-days: 14
+      
+      - name: Gerar relatório de acessibilidade
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const violations = ${{ steps.a11y.outputs.violations }};
+            
+            let reportBody = `## 🧐 Relatório de Acessibilidade\n\n`;
+            
+            if (violations > 0) {
+              reportBody += `⚠️ **${violations} violações de acessibilidade encontradas**\n\n`;
+              reportBody += `Por favor, verifique os artefatos da execução para detalhes completos.\n\n`;
+              reportBody += `### Próximos Passos\n\n`;
+              reportBody += `1. Baixe os artefatos da execução\n`;
+              reportBody += `2. Analise as violações reportadas\n`;
+              reportBody += `3. Corrija os problemas antes de mesclar\n\n`;
+              reportBody += `Lembre-se: Um site acessível é um site melhor para todos os usuários!`;
+            } else {
+              reportBody += `✅ **Nenhuma violação de acessibilidade encontrada!**\n\n`;
+              reportBody += `Parabéns por manter altos padrões de acessibilidade.`;
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: reportBody
+            });
+      
+      - name: Criar issue para violações de acessibilidade
+        if: ${{ steps.a11y.outputs.violations > 0 && (github.event_name == 'push' || github.event_name == 'schedule') }}
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const violations = ${{ steps.a11y.outputs.violations }};
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚨 Alerta de Acessibilidade: ${violations} violações encontradas`,
+              body: `## Alerta de Acessibilidade
+
+              Foram encontradas ${violations} violações de acessibilidade na última execução de testes.
+
+              ### 🔍 Detalhes
+
+              Os resultados detalhados estão disponíveis nos artefatos da execução do workflow.
+
+              ### Próximos Passos
+
+              1. Analise os artefatos da execução
+              2. Identifique as violações específicas
+              3. Corrija os problemas de acessibilidade
+              4. Execute novamente os testes para verificar as correções
+
+              A acessibilidade é fundamental para garantir que nosso site seja utilizável por todos.
+              `,
+              labels: ['accessibility', 'bug', 'automated']
+            });

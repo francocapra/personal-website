@@ -2,7 +2,7 @@ Franco Capra
 Summary
 SAP Developer with 16+ years of experience, including 6+ years as a full-stack developer. Proficient in database management, business logic, UI/UX, and relevant frameworks. Expertise in SAP Programming Models, ABAP, RESTful Applications, Cloud Applications, and HANA SQL script. Certified in SAP HANA and ABAP, with a proven track record of developing full-stack applications and enhancing business operations through SAP BTP solutions. Open to global opportunities, holds an EU passport.
 ⸻
-SAP® Certified Development Specialist – HANA (E_HANAAW_12) 
+SAP® Certified Development Specialist – HANA (E_HANAAW_12)
 SAP® Certified Development Associate – ABAP - NetWeaver 7.31 (TAW12 731)
 
 Experience
@@ -33,7 +33,6 @@ Working with HANA Data Lake (version 2 SP4) to manage and integrate over 40 glob
 HANA SQL Scripting: Enhancing data processing and analysis efficiency through smart scripting.
 Database Modeling: Designing database components like Tables, Calculation Views, and Procedures for efficient data management, particularly in the financial sector.
 Financials Business Module: Leveraging database expertise to improve financial reports, transactions, and analysis.
-
 
 SAP Full Stack Developer
 Ago 2019 to Jun 2020 | INETUM Consulting | Portugal
@@ -69,7 +68,7 @@ Gateway Services for CRUD Applications: Created OData services for CRUD applicat
 Troubleshooting and Debugging: Used various tools to troubleshoot and resolve issues, ensuring application robustness.
 Development Tools: Utilized SAP Web IDE and Eclipse for efficient development and performance.
 Focus on Financial SAP Modules: Optimized financial processes and reporting within SAP's Financial modules.
-SAP Developer 
+SAP Developer
 Jun 2017 to Jun 2018 | SAP Labs Latin American | São Leopoldo, Brazil
 Working as the third party of the SAP Team of globalised services area, this team is focused on financial processes, participating in a project to develop legal framework requirements to serve Latin American countries such as Colombia and Mexico;
 Part of architecture design according to the requirements, also duties as including code reviews, preparation of manual and automated tests and execution of software tests to verify the accuracy and integrity of the implemented requirements;
