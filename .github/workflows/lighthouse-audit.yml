@@ -17,6 +17,8 @@ jobs:
   lighthouse-audit:
     name: Performance Audit
     runs-on: ubuntu-latest
+    permissions:
+      issues: write # Needed to create issues for low performance
 
     steps:
       - name: Checkout código
