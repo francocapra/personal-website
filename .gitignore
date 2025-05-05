@@ -19,6 +19,10 @@ dist/
 assets/js/*.js
 
 # Build outputs
+assets/css/test-output.css
+
+# Test results
+test-results/
 dist/
 build/
 out/
