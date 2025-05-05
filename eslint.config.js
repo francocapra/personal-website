@@ -1,9 +1,6 @@
 import eslintJs from '@eslint/js';
 import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
-import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
-import reactPlugin from 'eslint-plugin-react';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 
 export default [
@@ -38,41 +35,9 @@ export default [
     },
   },
 
-  // React configurations (using the new flat config structure)
-  {
-    files: ['**/*.jsx'],
-    plugins: {
-      react: reactPlugin,
-      'react-hooks': reactHooksPlugin,
-      'jsx-a11y': jsxA11yPlugin,
-    },
-    languageOptions: {
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-      globals: {
-        ...globals.browser,
-      },
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
-    rules: {
-      ...reactPlugin.configs.recommended.rules,
-      ...reactHooksPlugin.configs.recommended.rules,
-      ...jsxA11yPlugin.configs.recommended.rules,
-      'react/prop-types': 'off',
-      'react/react-in-jsx-scope': 'off',
-    },
-  },
-
   // Import plugin configuration
   {
-    files: ['**/*.{js,jsx,mjs}'], // Apply to all relevant files
+    files: ['**/*.{js,mjs}'], // Apply to JS/MJS files
     plugins: {
       import: importPlugin,
     },
@@ -109,7 +74,7 @@ export default [
 
   // Custom rules and overrides for all JS files
   {
-    files: ['**/*.{js,jsx,mjs}'], // Apply globally or adjust as needed
+    files: ['**/*.{js,mjs}'], // Apply globally or adjust as needed
     languageOptions: {
       globals: {
         // Already defined more specifically above, can remove general browser/node here if desired

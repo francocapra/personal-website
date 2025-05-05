@@ -17,26 +17,26 @@ jobs:
   lighthouse-audit:
     name: Performance Audit
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout código
         uses: actions/checkout@v3
-      
+
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Instalar dependências
         run: npm ci
-      
+
       - name: Iniciar servidor
         run: |
           npm install -g serve
-          serve -s . -l 5000 --single &
+          serve -s src -l 5000 --single & # Serve from src directory
           sleep 5
-      
+
       - name: Executar Lighthouse CI
         id: lighthouse
         uses: treosh/lighthouse-ci-action@v9
@@ -44,77 +44,55 @@ jobs:
           urls: |
             http://localhost:5000/
           uploadArtifacts: true
-          temporaryPublicStorage: true
-      
-      # Extrair e salvar os resultados do Lighthouse em um formato seguro
-      - name: Processar resultados do Lighthouse
-        id: process_lighthouse
-        run: |
-          # Criar um arquivo temporário com o conteúdo do manifest
-          cat > lighthouse-results.json << 'EOL'
-          ${{ steps.lighthouse.outputs.manifest }}
-          EOL
-          
-          # Extrair URLs dos relatórios (se disponíveis)
-          if [[ -f lighthouse-results.json && -s lighthouse-results.json ]]; then
-            REPORT_URL=$(jq -r '.links[0].url // "#"' lighthouse-results.json 2>/dev/null || echo "#")
-            LHR_URL=$(jq -r '.links[0].lhr // "#"' lighthouse-results.json 2>/dev/null || echo "#")
-            echo "report_url=$REPORT_URL" >> $GITHUB_OUTPUT
-            echo "lhr_url=$LHR_URL" >> $GITHUB_OUTPUT
-            
-            # Extrair scores
-            PERFORMANCE=$(jq -r '.manifest | to_entries[0].value.summary.performance // 0' lighthouse-results.json 2>/dev/null || echo "0")
-            ACCESSIBILITY=$(jq -r '.manifest | to_entries[0].value.summary.accessibility // 0' lighthouse-results.json 2>/dev/null || echo "0")
-            BEST_PRACTICES=$(jq -r '.manifest | to_entries[0].value.summary.["best-practices"] // 0' lighthouse-results.json 2>/dev/null || echo "0")
-            SEO=$(jq -r '.manifest | to_entries[0].value.summary.seo // 0' lighthouse-results.json 2>/dev/null || echo "0")
-            
-            echo "performance=$PERFORMANCE" >> $GITHUB_OUTPUT
-            echo "accessibility=$ACCESSIBILITY" >> $GITHUB_OUTPUT
-            echo "best_practices=$BEST_PRACTICES" >> $GITHUB_OUTPUT
-            echo "seo=$SEO" >> $GITHUB_OUTPUT
-          else
-            echo "report_url=#" >> $GITHUB_OUTPUT
-            echo "lhr_url=#" >> $GITHUB_OUTPUT
-            echo "performance=0" >> $GITHUB_OUTPUT
-            echo "accessibility=0" >> $GITHUB_OUTPUT
-            echo "best_practices=0" >> $GITHUB_OUTPUT
-            echo "seo=0" >> $GITHUB_OUTPUT
-          fi
-      
+          temporaryPublicStorage: true # Required for direct outputs like links and scores
+
+      # Removed the problematic 'Processar resultados do Lighthouse' step
+
       - name: Gerar comentário com resultados
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // Usar os outputs do passo de processamento
-            const performance = parseFloat('${{ steps.process_lighthouse.outputs.performance }}') || 0;
-            const accessibility = parseFloat('${{ steps.process_lighthouse.outputs.accessibility }}') || 0;
-            const bestPractices = parseFloat('${{ steps.process_lighthouse.outputs.best_practices }}') || 0;
-            const seo = parseFloat('${{ steps.process_lighthouse.outputs.seo }}') || 0;
-            
-            const reportUrl = '${{ steps.process_lighthouse.outputs.report_url }}';
-            const lhrUrl = '${{ steps.process_lighthouse.outputs.lhr_url }}';
-            
-            // Criar tabela de scores
+            // Get scores directly from Lighthouse action outputs
+            const performance = parseFloat('${{ steps.lighthouse.outputs.scores_performance }}') || 0;
+            const accessibility = parseFloat('${{ steps.lighthouse.outputs.scores_accessibility }}') || 0;
+            const bestPractices = parseFloat('${{ steps.lighthouse.outputs.scores_best-practices }}') || 0; // Note the key name
+            const seo = parseFloat('${{ steps.lighthouse.outputs.scores_seo }}') || 0;
+
+            // Parse the links JSON output to get the report URL
+            const linksOutput = `${{ steps.lighthouse.outputs.links }}`;
+            let reportUrl = '#';
+            try {
+              const links = JSON.parse(linksOutput);
+              // Use the first URL found in the links JSON as the report URL
+              if (links && Object.keys(links).length > 0) {
+                reportUrl = links[Object.keys(links)[0]];
+              }
+            } catch (e) {
+              console.error("Error parsing Lighthouse links output:", e);
+              console.error("Links output was:", linksOutput);
+            }
+
+            // Create table of scores
             let scoreTable = '| Métrica | Pontuação |\n| ------- | -------- |\n';
             scoreTable += `| Performance | ${Math.round(performance * 100)} |\n`;
             scoreTable += `| Acessibilidade | ${Math.round(accessibility * 100)} |\n`;
             scoreTable += `| Melhores Práticas | ${Math.round(bestPractices * 100)} |\n`;
             scoreTable += `| SEO | ${Math.round(seo * 100)} |\n`;
-            
-            // Criar comentário
+
+            // Create comment
             const comment = `## 📈 Relatório Lighthouse
-            
+
             ${scoreTable}
-            
+
             ### 🔍 Detalhes
-            
-            - [Relatório Completo](${reportUrl})
-            - [Visualizar Todas as Execuções](${lhrUrl})
-            
+
+            - [Relatório Lighthouse Completo](${reportUrl})
+            - _Resultados detalhados também estão disponíveis nos artefatos da execução._
+
             `;
-            
+
             // Postar comentário na PR
             github.rest.issues.createComment({
               issue_number: context.issue.number,
@@ -122,22 +100,32 @@ jobs:
               repo: context.repo.repo,
               body: comment
             });
-      
+
       - name: Verificar thresholds de performance
         if: github.event_name == 'push' || github.event_name == 'schedule'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // Usar os outputs do passo de processamento
-            const performance = parseFloat('${{ steps.process_lighthouse.outputs.performance }}') || 0;
-            const accessibility = parseFloat('${{ steps.process_lighthouse.outputs.accessibility }}') || 0;
-            const bestPractices = parseFloat('${{ steps.process_lighthouse.outputs.best_practices }}') || 0;
-            const seo = parseFloat('${{ steps.process_lighthouse.outputs.seo }}') || 0;
-            
-            const reportUrl = '${{ steps.process_lighthouse.outputs.report_url }}';
-            const lhrUrl = '${{ steps.process_lighthouse.outputs.lhr_url }}';
-            
+            // Get scores directly from Lighthouse action outputs
+            const performance = parseFloat('${{ steps.lighthouse.outputs.scores_performance }}') || 0;
+            const accessibility = parseFloat('${{ steps.lighthouse.outputs.scores_accessibility }}') || 0;
+            const bestPractices = parseFloat('${{ steps.lighthouse.outputs.scores_best-practices }}') || 0; // Note the key name
+            const seo = parseFloat('${{ steps.lighthouse.outputs.scores_seo }}') || 0;
+
+            // Parse the links JSON output to get the report URL (for the issue body)
+            const linksOutput = `${{ steps.lighthouse.outputs.links }}`;
+            let reportUrl = '#';
+            try {
+              const links = JSON.parse(linksOutput);
+              if (links && Object.keys(links).length > 0) {
+                reportUrl = links[Object.keys(links)[0]];
+              }
+            } catch (e) {
+              console.error("Error parsing Lighthouse links output:", e);
+              console.error("Links output was:", linksOutput);
+            }
+
             // Definir thresholds
             const thresholds = {
               performance: 0.85,
@@ -145,41 +133,41 @@ jobs:
               'best-practices': 0.9,
               seo: 0.8
             };
-            
+
             // Verificar se algum score está abaixo do threshold
             let failedMetrics = [];
             if (performance < thresholds.performance) {
-              failedMetrics.push(`performance: ${Math.round(performance * 100)} (threshold: ${Math.round(thresholds.performance * 100)})`);
+              failedMetrics.push(\`Performance: ${Math.round(performance * 100)} (threshold: ${Math.round(thresholds.performance * 100)})\`);
             }
             if (accessibility < thresholds.accessibility) {
-              failedMetrics.push(`accessibility: ${Math.round(accessibility * 100)} (threshold: ${Math.round(thresholds.accessibility * 100)})`);
+              failedMetrics.push(\`Acessibilidade: ${Math.round(accessibility * 100)} (threshold: ${Math.round(thresholds.accessibility * 100)})\`);
             }
             if (bestPractices < thresholds['best-practices']) {
-              failedMetrics.push(`best-practices: ${Math.round(bestPractices * 100)} (threshold: ${Math.round(thresholds['best-practices'] * 100)})`);
+              failedMetrics.push(\`Melhores Práticas: ${Math.round(bestPractices * 100)} (threshold: ${Math.round(thresholds['best-practices'] * 100)})\`);
             }
             if (seo < thresholds.seo) {
-              failedMetrics.push(`seo: ${Math.round(seo * 100)} (threshold: ${Math.round(thresholds.seo * 100)})`);
+              failedMetrics.push(\`SEO: ${Math.round(seo * 100)} (threshold: ${Math.round(thresholds.seo * 100)})\`);
             }
-            
+
             // Criar issue se houver métricas abaixo do threshold
             if (failedMetrics.length > 0) {
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: '🚨 Alerta de Performance: Métricas Lighthouse abaixo do threshold',
-                body: `## Alerta de Performance
-                
+                body: \`## Alerta de Performance
+
                 As seguintes métricas estão abaixo dos thresholds definidos:
-                
-                ${failedMetrics.map(metric => `- ${metric}`).join('\n')}
-                
+
+                \${failedMetrics.map(metric => \`- \${metric}\`).join('\\n')}
+
                 ### 🔍 Detalhes
-                
-                - [Relatório Completo](${reportUrl})
-                - [Visualizar Todas as Execuções](${lhrUrl})
-                
+
+                - [Relatório Lighthouse Completo](${reportUrl})
+                - _Resultados detalhados também estão disponíveis nos artefatos da execução._
+
                 Por favor, verifique e corrija os problemas de performance.
-                `,
-                labels: ['performance', 'automated']
+                \`,
+                labels: ['performance', 'automated', 'bug']
               });
             }
