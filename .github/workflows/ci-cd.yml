@@ -75,6 +75,8 @@ jobs:
   # Trabalho de verificação final - garante que o código está pronto para deploy
   verify:
     name: Verificação Final
+    permissions:
+      contents: write # Needed to create commit comments
     needs: [test, lint]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
