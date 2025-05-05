@@ -1,0 +1,114 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # Trabalho de teste - executa os testes automatizados
+  test:
+    name: Testes Automatizados
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Passo 1: Checkout do código
+      - name: Checkout do código
+        uses: actions/checkout@v3
+      
+      # Passo 2: Configuração do Node.js
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      # Passo 3: Instalação de dependências
+      - name: Instalar dependências
+        run: npm ci
+      
+      # Passo 4: Instalação dos navegadores do Playwright (apenas Chromium)
+      - name: Instalar navegadores Playwright
+        run: npx playwright install --with-deps chromium
+      
+      # Passo 5: Execução dos testes
+      - name: Executar testes
+        run: npm run test
+      
+      # Passo 6: Armazenar relatórios de teste como artefatos
+      - name: Armazenar relatórios de teste
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 7
+
+  # Trabalho de linting - verifica a qualidade do código
+  lint:
+    name: Linting e Formatação
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+      
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Instalar dependências
+        run: npm ci
+      
+      - name: Verificar formatação com Prettier
+        run: npx prettier --check .
+      
+      - name: Executar ESLint
+        run: npx eslint . --ext .js,.ts
+
+  # Trabalho de verificação final - garante que o código está pronto para deploy
+  verify:
+    name: Verificação Final
+    needs: [test, lint]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+      
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Instalar dependências
+        run: npm ci
+      
+      # Verificação final antes do deploy automático do Cloudflare
+      - name: Verificar estrutura do projeto
+        run: |
+          echo "✅ Verificação final concluída"
+          echo "ℹ️ O deploy será realizado automaticamente pelo Cloudflare Pages"
+          echo "ℹ️ Cloudflare Pages está configurado para monitorar a branch main"
+      
+      # Notificar sobre o início do deploy
+      - name: Notificar sobre deploy
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const sha = context.sha.substring(0, 7);
+            const message = `## 🚀 Deploy Iniciado\n\nA verificação de CI foi concluída com sucesso para o commit \`${sha}\`.\n\nO Cloudflare Pages iniciará automaticamente o processo de deploy.`;
+            
+            // Criar um comentário no commit
+            await github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: message
+            });

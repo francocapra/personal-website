@@ -1,0 +1,189 @@
+name: GitHub MCP Integration
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  process-with-ai:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      # Análise de código com AI
+      - name: Analyze code changes
+        if: github.event_name == 'pull_request'
+        id: analyze
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const repo = context.repo;
+            
+            // Obter arquivos alterados
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: repo.owner,
+              repo: repo.repo,
+              pull_number: prNumber
+            });
+            
+            // Analisar alterações
+            let codeAnalysis = "## Análise de Código AI\n\n";
+            
+            if (files.length > 10) {
+              codeAnalysis += "🔍 **Alterações extensas detectadas**\n\n";
+              codeAnalysis += "Esta PR contém muitas alterações. Considere dividir em PRs menores para facilitar a revisão.\n\n";
+            }
+            
+            // Verificar tipos de arquivos
+            const fileTypes = files.map(file => file.filename.split('.').pop());
+            const uniqueTypes = [...new Set(fileTypes)];
+            
+            codeAnalysis += `### Tipos de Arquivos Alterados\n\n`;
+            codeAnalysis += uniqueTypes.map(type => `- \`${type}\``).join('\n');
+            codeAnalysis += '\n\n';
+            
+            // Adicionar comentário na PR
+            await github.rest.issues.createComment({
+              owner: repo.owner,
+              repo: repo.repo,
+              issue_number: prNumber,
+              body: codeAnalysis
+            });
+            
+            return { success: true };
+      
+      # Resposta automática a issues
+      - name: Process new issue
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueNumber = context.payload.issue.number;
+            const issueTitle = context.payload.issue.title;
+            const issueBody = context.payload.issue.body;
+            const repo = context.repo;
+            
+            // Resposta automática
+            let response = `Olá @${context.payload.issue.user.login}! 👋\n\n`;
+            response += "Obrigado por abrir esta issue. Ela foi registrada e será analisada em breve.\n\n";
+            
+            // Categorizar issue
+            if (issueTitle.toLowerCase().includes('bug') || issueBody.toLowerCase().includes('erro')) {
+              response += "Parece que você está relatando um bug. Para nos ajudar a resolver mais rapidamente, poderia fornecer:\n\n";
+              response += "- Passos para reproduzir\n- Comportamento esperado\n- Comportamento atual\n- Capturas de tela (se aplicável)\n\n";
+              
+              // Adicionar label
+              await github.rest.issues.addLabels({
+                owner: repo.owner,
+                repo: repo.repo,
+                issue_number: issueNumber,
+                labels: ['bug', 'triage-needed']
+              });
+            } else if (issueTitle.toLowerCase().includes('feature') || issueTitle.toLowerCase().includes('recurso')) {
+              response += "Parece que você está sugerindo um novo recurso. Para nos ajudar a avaliar melhor, poderia detalhar:\n\n";
+              response += "- Qual problema este recurso resolve?\n- Como você imagina a implementação?\n- Existem alternativas que você considerou?\n\n";
+              
+              // Adicionar label
+              await github.rest.issues.addLabels({
+                owner: repo.owner,
+                repo: repo.repo,
+                issue_number: issueNumber,
+                labels: ['enhancement', 'triage-needed']
+              });
+            } else {
+              // Adicionar label genérica
+              await github.rest.issues.addLabels({
+                owner: repo.owner,
+                repo: repo.repo,
+                issue_number: issueNumber,
+                labels: ['triage-needed']
+              });
+            }
+            
+            response += "Nossa equipe revisará esta issue assim que possível. Obrigado pela contribuição!";
+            
+            // Comentar na issue
+            await github.rest.issues.createComment({
+              owner: repo.owner,
+              repo: repo.repo,
+              issue_number: issueNumber,
+              body: response
+            });
+            
+            return { success: true };
+      
+      # Análise de comentários em issues
+      - name: Process issue comment
+        if: github.event_name == 'issue_comment' && github.event.action == 'created'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issueNumber = context.payload.issue.number;
+            const commentBody = context.payload.comment.body;
+            const repo = context.repo;
+            
+            // Verificar se o comentário contém comandos para o bot
+            if (commentBody.includes('/help')) {
+              const helpMessage = `## Comandos Disponíveis\n\n` +
+                `- \`/help\` - Mostra esta mensagem de ajuda\n` +
+                `- \`/label bug\` - Adiciona label de bug\n` +
+                `- \`/label enhancement\` - Adiciona label de melhoria\n` +
+                `- \`/label question\` - Adiciona label de pergunta\n`;
+              
+              await github.rest.issues.createComment({
+                owner: repo.owner,
+                repo: repo.repo,
+                issue_number: issueNumber,
+                body: helpMessage
+              });
+            } else if (commentBody.startsWith('/label ')) {
+              const label = commentBody.split('/label ')[1].trim();
+              
+              // Adicionar label solicitada
+              try {
+                await github.rest.issues.addLabels({
+                  owner: repo.owner,
+                  repo: repo.repo,
+                  issue_number: issueNumber,
+                  labels: [label]
+                });
+                
+                await github.rest.issues.createComment({
+                  owner: repo.owner,
+                  repo: repo.repo,
+                  issue_number: issueNumber,
+                  body: `✅ Label \`${label}\` adicionada com sucesso!`
+                });
+              } catch (error) {
+                await github.rest.issues.createComment({
+                  owner: repo.owner,
+                  repo: repo.repo,
+                  issue_number: issueNumber,
+                  body: `❌ Erro ao adicionar label \`${label}\`. Verifique se ela existe no repositório.`
+                });
+              }
+            }
+            
+            return { success: true };

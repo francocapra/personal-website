@@ -1,199 +1,275 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Franco Capra - Personal Website</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="assets/css/output.css" />
+    <!-- Legacy CSS - Será migrado gradualmente para Tailwind -->
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <nav>
-        <div class="nav-content">
-            <div class="logo">FC</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="theme-toggle">
-                <i class="fas fa-moon"></i>
-            </div>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+      <div class="nav-content">
+        <div class="logo">FC</div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="theme-toggle">
+          <i class="fas fa-moon"></i>
         </div>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
     </nav>
 
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Franco Capra</h1>
-            <h2>SAP Fullstack Developer</h2>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/francocapra/" target="_blank" class="social-link" aria-label="LinkedIn">
-                    <div class="social-icon">
-                        <i class="fab fa-linkedin"></i>
-                    </div>
-                </a>
-                <a href="https://github.com/francocapra" target="_blank" class="social-link" aria-label="GitHub">
-                    <div class="social-icon">
-                        <i class="fab fa-github"></i>
-                    </div>
-                </a>
-                <a href="mailto:mail@francocapra.com" class="social-link" aria-label="Email">
-                    <div class="social-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                </a>
-
+      <div class="hero-content">
+        <h1>Franco Capra</h1>
+        <h2>SAP Fullstack Developer</h2>
+        <div class="social-links">
+          <a
+            href="https://www.linkedin.com/in/francocapra/"
+            target="_blank"
+            class="social-link"
+            aria-label="LinkedIn"
+          >
+            <div class="social-icon">
+              <i class="fab fa-linkedin"></i>
             </div>
+          </a>
+          <a
+            href="https://github.com/francocapra"
+            target="_blank"
+            class="social-link"
+            aria-label="GitHub"
+          >
+            <div class="social-icon">
+              <i class="fab fa-github"></i>
+            </div>
+          </a>
+          <a
+            href="mailto:mail@francocapra.com"
+            class="social-link"
+            aria-label="Email"
+          >
+            <div class="social-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+          </a>
         </div>
+      </div>
     </section>
 
     <section id="about" class="about">
-        <h2>About Me</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>SAP Developer with 16+ years of experience, including 6+ years as a full-stack developer. Proficient in database management, business logic, UI/UX, and relevant frameworks. Expertise in SAP Programming Models, ABAP, RESTful Applications, Cloud Applications, and HANA SQL script.</p>
-                <p>Certified in SAP HANA and ABAP, with a proven track record of developing full-stack applications and enhancing business operations through SAP BTP solutions. Open to global opportunities, holds an EU passport.</p>
-                <div class="certifications">
-                    <h3>Certifications</h3>
-                    <ul>
-                        <li>SAP® Certified Development Specialist – HANA (E_HANAAW_12)</li>
-                        <li>SAP® Certified Development Associate – ABAP - NetWeaver 7.31 (TAW12 731)</li>
-                        <li>SAP Certified Development Specialist – ABAP for SAP HANA(CDS) – Edition 2016</li>
-                        <li>Introduction to ABAP in the Cloud, openSAP</li>
-                        <li>SAP Cloud Platform Essentials (Update Q2/2019), openSAP</li>
-                        <li>Evolved Web Apps with SAPUI5, openSAP</li>
-                        <li>Software Development on SAP HANA (Update Q1/2019), openSAP</li>
-                    </ul>
-                </div>
-                <div class="languages">
-                    <h3>Languages</h3>
-                    <ul>
-                        <li>Portuguese – Native</li>
-                        <li>English - Full professional proficiency</li>
-                        <li>Italian - Professional working proficiency</li>
-                    </ul>
-                </div>
-            </div>
+      <h2>About Me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>
+            SAP Developer with 16+ years of experience, including 6+ years as a
+            full-stack developer. Proficient in database management, business
+            logic, UI/UX, and relevant frameworks. Expertise in SAP Programming
+            Models, ABAP, RESTful Applications, Cloud Applications, and HANA SQL
+            script.
+          </p>
+          <p>
+            Certified in SAP HANA and ABAP, with a proven track record of
+            developing full-stack applications and enhancing business operations
+            through SAP BTP solutions. Open to global opportunities, holds an EU
+            passport.
+          </p>
+          <div class="certifications">
+            <h3>Certifications</h3>
+            <ul>
+              <li>
+                SAP® Certified Development Specialist – HANA (E_HANAAW_12)
+              </li>
+              <li>
+                SAP® Certified Development Associate – ABAP - NetWeaver 7.31
+                (TAW12 731)
+              </li>
+              <li>
+                SAP Certified Development Specialist – ABAP for SAP HANA(CDS) –
+                Edition 2016
+              </li>
+              <li>Introduction to ABAP in the Cloud, openSAP</li>
+              <li>SAP Cloud Platform Essentials (Update Q2/2019), openSAP</li>
+              <li>Evolved Web Apps with SAPUI5, openSAP</li>
+              <li>
+                Software Development on SAP HANA (Update Q1/2019), openSAP
+              </li>
+            </ul>
+          </div>
+          <div class="languages">
+            <h3>Languages</h3>
+            <ul>
+              <li>Portuguese – Native</li>
+              <li>English - Full professional proficiency</li>
+              <li>Italian - Professional working proficiency</li>
+            </ul>
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="experience" class="experience">
-        <h2>Professional Experience</h2>
-        <div class="timeline">
-            <div class="experience-card">
-                <h3>SAP FULLSTACK Developer</h3>
-                <h4>Energy French Company | Portugal/French</h4>
-                <p class="date">August 2023 - Present</p>
-                <ul>
-                    <li>Working with financial specialists and using DevOps to improve efficiency</li>
-                    <li>Performing Unit Testing to catch errors early</li>
-                    <li>Using ABAP Test Cockpit (ATC) to ensure SAP code quality</li>
-                    <li>Developing on the Business Technology Platform (CAP, RAP, Connectivity, Destination Services, UI5)</li>
-                    <li>Advocating for clean, modularized code (On Stack Clean Core)</li>
-                    <li>Automating frontend pipelines with Unit tests, Quality tests, Security tests, and Deployment in DevOps</li>
-                </ul>
-            </div>
-            <div class="experience-card">
-                <h3>SAP FULLSTACK Developer</h3>
-                <h4>DELOITTE Consulting | Portugal/Germany</h4>
-                <p class="date">September 2020 - July 2023</p>
-                <ul>
-                    <li>FIORI Management and Mobile Extension</li>
-                    <li>BTP Migration: Transitioning from legacy WebIDE to Business Application Studio</li>
-                    <li>RAP: Building Web API/UI Services using RAP</li>
-                    <li>DevOps Practices: Enhancing automation and reliability</li>
-                    <li>Financials Business Module: Streamlining financial operations</li>
-                </ul>
-            </div>
-            <div class="experience-card">
-                <h3>SAP HANA Developer</h3>
-                <h4>SIEMENS S.A. | Portugal</h4>
-                <p class="date">June 2020 - August 2020</p>
-                <ul>
-                    <li>HANA SQL Scripting: Enhancing data processing and analysis efficiency</li>
-                    <li>Database Modeling: Designing database components for efficient data management</li>
-                    <li>Financials Business Module: Improving financial reports and analysis</li>
-                </ul>
-            </div>
+      <h2>Professional Experience</h2>
+      <div class="timeline">
+        <div class="experience-card">
+          <h3>SAP FULLSTACK Developer</h3>
+          <h4>Energy French Company | Portugal/French</h4>
+          <p class="date">August 2023 - Present</p>
+          <ul>
+            <li>
+              Working with financial specialists and using DevOps to improve
+              efficiency
+            </li>
+            <li>Performing Unit Testing to catch errors early</li>
+            <li>Using ABAP Test Cockpit (ATC) to ensure SAP code quality</li>
+            <li>
+              Developing on the Business Technology Platform (CAP, RAP,
+              Connectivity, Destination Services, UI5)
+            </li>
+            <li>
+              Advocating for clean, modularized code (On Stack Clean Core)
+            </li>
+            <li>
+              Automating frontend pipelines with Unit tests, Quality tests,
+              Security tests, and Deployment in DevOps
+            </li>
+          </ul>
         </div>
-        <div class="view-more">
-            <a href="#" class="btn">View Full Experience</a>
+        <div class="experience-card">
+          <h3>SAP FULLSTACK Developer</h3>
+          <h4>DELOITTE Consulting | Portugal/Germany</h4>
+          <p class="date">September 2020 - July 2023</p>
+          <ul>
+            <li>FIORI Management and Mobile Extension</li>
+            <li>
+              BTP Migration: Transitioning from legacy WebIDE to Business
+              Application Studio
+            </li>
+            <li>RAP: Building Web API/UI Services using RAP</li>
+            <li>DevOps Practices: Enhancing automation and reliability</li>
+            <li>
+              Financials Business Module: Streamlining financial operations
+            </li>
+          </ul>
         </div>
+        <div class="experience-card">
+          <h3>SAP HANA Developer</h3>
+          <h4>SIEMENS S.A. | Portugal</h4>
+          <p class="date">June 2020 - August 2020</p>
+          <ul>
+            <li>
+              HANA SQL Scripting: Enhancing data processing and analysis
+              efficiency
+            </li>
+            <li>
+              Database Modeling: Designing database components for efficient
+              data management
+            </li>
+            <li>
+              Financials Business Module: Improving financial reports and
+              analysis
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="view-more">
+        <a href="#" class="btn">View Full Experience</a>
+      </div>
     </section>
-    
+
     <section id="projects" class="projects">
-        <h2>Technical Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <h3>SAP Technologies</h3>
-                <ul>
-                    <li>ABAP Development (OO ABAP, CDS, BOPF, AMDP)</li>
-                    <li>SAP HANA (SQL Script, Database Modeling)</li>
-                    <li>SAP Fiori/UI5 Development</li>
-                    <li>SAP BTP (Cloud Application Programming Model)</li>
-                    <li>RESTful ABAP Programming Model (RAP)</li>
-                </ul>
-            </div>
-            <div class="skill-card">
-                <h3>SAP Modules</h3>
-                <ul>
-                    <li>Financial Accounting (FI)</li>
-                    <li>Controlling (CO)</li>
-                    <li>Materials Management (MM)</li>
-                    <li>Sales and Distribution (SD)</li>
-                    <li>Logistics Execution (LE)</li>
-                    <li>Production Planning (PP)</li>
-                </ul>
-            </div>
-            <div class="skill-card">
-                <h3>Development Practices</h3>
-                <ul>
-                    <li>DevOps & CI/CD Pipelines</li>
-                    <li>Unit Testing & Quality Assurance</li>
-                    <li>Clean Code & Modularization</li>
-                    <li>System Integration (SOA/Web Services)</li>
-                    <li>Performance Optimization</li>
-                </ul>
-            </div>
+      <h2>Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>SAP Technologies</h3>
+          <ul>
+            <li>ABAP Development (OO ABAP, CDS, BOPF, AMDP)</li>
+            <li>SAP HANA (SQL Script, Database Modeling)</li>
+            <li>SAP Fiori/UI5 Development</li>
+            <li>SAP BTP (Cloud Application Programming Model)</li>
+            <li>RESTful ABAP Programming Model (RAP)</li>
+          </ul>
         </div>
+        <div class="skill-card">
+          <h3>SAP Modules</h3>
+          <ul>
+            <li>Financial Accounting (FI)</li>
+            <li>Controlling (CO)</li>
+            <li>Materials Management (MM)</li>
+            <li>Sales and Distribution (SD)</li>
+            <li>Logistics Execution (LE)</li>
+            <li>Production Planning (PP)</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>Development Practices</h3>
+          <ul>
+            <li>DevOps & CI/CD Pipelines</li>
+            <li>Unit Testing & Quality Assurance</li>
+            <li>Clean Code & Modularization</li>
+            <li>System Integration (SOA/Web Services)</li>
+            <li>Performance Optimization</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <section id="contact" class="contact">
-        <h2>Contact Me</h2>
-        <form id="contact-form" action="https://formspree.io/f/mail@francocapra.com" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-        <div class="contact-info">
-            <div class="contact-item">
-                <i class="fas fa-envelope"></i>
-                <a href="mailto:mail@francocapra.com">mail@francocapra.com</a>
-            </div>
-            <div class="contact-item">
-                <i class="fab fa-linkedin"></i>
-                <a href="https://www.linkedin.com/in/francocapra/" target="_blank">linkedin.com/in/francocapra</a>
-            </div>
-            <div class="contact-item">
-                <i class="fab fa-github"></i>
-                <a href="https://github.com/francocapra" target="_blank">github.com/francocapra</a>
-            </div>
+      <h2>Contact Me</h2>
+      <form
+        id="contact-form"
+        action="https://formspree.io/f/mail@francocapra.com"
+        method="POST"
+      >
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:mail@francocapra.com">mail@francocapra.com</a>
         </div>
+        <div class="contact-item">
+          <i class="fab fa-linkedin"></i>
+          <a href="https://www.linkedin.com/in/francocapra/" target="_blank"
+            >linkedin.com/in/francocapra</a
+          >
+        </div>
+        <div class="contact-item">
+          <i class="fab fa-github"></i>
+          <a href="https://github.com/francocapra" target="_blank"
+            >github.com/francocapra</a
+          >
+        </div>
+      </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Franco Capra. All rights reserved.</p>
+      <p>&copy; 2025 Franco Capra. All rights reserved.</p>
     </footer>
 
     <script type="module" src="assets/js/script.mjs"></script>
-</body>
+  </body>
 </html>

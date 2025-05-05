@@ -10,5 +10,5 @@ export default defineConfig({
   dts: false,
   minify: true,
   splitting: false,
-  shims: false
+  shims: false,
 });

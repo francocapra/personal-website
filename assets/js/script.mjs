@@ -1,2 +1,50 @@
-function o(e){document.documentElement.setAttribute("data-theme",e),localStorage.setItem("theme",e)}var l=document.querySelector(".theme-toggle"),i=window.matchMedia("(prefers-color-scheme: dark)"),a=localStorage.getItem("theme");a?o(a):i.matches&&o("dark");l&&l.addEventListener("click",()=>{let t=(document.documentElement.getAttribute("data-theme")||"light")==="light"?"dark":"light";o(t)});document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(t){t.preventDefault();let c=this.getAttribute("href");if(!c)return;let s=document.querySelector(c);s&&s.scrollIntoView({behavior:"smooth"})})});var m=document.querySelector(".hamburger"),n=document.querySelector(".nav-links");m&&n&&m.addEventListener("click",()=>{n.style.display=n.style.display==="flex"?"none":"flex"});var r=document.getElementById("contact-form");r&&r.addEventListener("submit",e=>{e.preventDefault(),alert("Thank you for your message! I will get back to you soon."),r.reset()});var u={threshold:.1},d=new IntersectionObserver(e=>{e.forEach(t=>{t.isIntersecting&&t.target.classList.add("animate")})},u);document.querySelectorAll(".animate-on-scroll").forEach(e=>{d.observe(e)});
+function o(e) {
+  document.documentElement.setAttribute('data-theme', e),
+    localStorage.setItem('theme', e);
+}
+var l = document.querySelector('.theme-toggle'),
+  i = window.matchMedia('(prefers-color-scheme: dark)'),
+  a = localStorage.getItem('theme');
+a ? o(a) : i.matches && o('dark');
+l &&
+  l.addEventListener('click', () => {
+    let t =
+      (document.documentElement.getAttribute('data-theme') || 'light') ===
+      'light'
+        ? 'dark'
+        : 'light';
+    o(t);
+  });
+document.querySelectorAll('a[href^="#"]').forEach((e) => {
+  e.addEventListener('click', function (t) {
+    t.preventDefault();
+    let c = this.getAttribute('href');
+    if (!c) return;
+    let s = document.querySelector(c);
+    s && s.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+var m = document.querySelector('.hamburger'),
+  n = document.querySelector('.nav-links');
+m &&
+  n &&
+  m.addEventListener('click', () => {
+    n.style.display = n.style.display === 'flex' ? 'none' : 'flex';
+  });
+var r = document.getElementById('contact-form');
+r &&
+  r.addEventListener('submit', (e) => {
+    e.preventDefault(),
+      alert('Thank you for your message! I will get back to you soon.'),
+      r.reset();
+  });
+var u = { threshold: 0.1 },
+  d = new IntersectionObserver((e) => {
+    e.forEach((t) => {
+      t.isIntersecting && t.target.classList.add('animate');
+    });
+  }, u);
+document.querySelectorAll('.animate-on-scroll').forEach((e) => {
+  d.observe(e);
+});
 //# sourceMappingURL=script.mjs.map
