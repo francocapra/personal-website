@@ -3,10 +3,10 @@ name: Accessibility Audit
 on:
   # Executa em pushes para main
   push:
-    branches: [ main ]
+    branches: [main]
   # Executa em PRs para main
   pull_request:
-    branches: [ main ]
+    branches: [main]
   # Permite execução manual
   workflow_dispatch:
   # Executa semanalmente para monitoramento contínuo
@@ -17,35 +17,35 @@ jobs:
   a11y-audit:
     name: Accessibility Audit
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout código
         uses: actions/checkout@v3
-      
+
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: 'npm'
-      
+
       - name: Instalar dependências
         run: npm ci
-      
+
       - name: Instalar Playwright
         run: npx playwright install --with-deps chromium
-      
+
       - name: Iniciar servidor
         run: |
           npm install -g serve
           serve -s src -l 5000 --single &
           sleep 5
-      
+
       - name: Executar testes de acessibilidade
         id: a11y
         run: |
           # Executa apenas o teste de acessibilidade
           npx playwright test tests/accessibility.spec.ts --reporter=json > a11y-results.json || true
-          
+
           # Verifica se o arquivo existe
           if [ -f "a11y-results.json" ]; then
             echo "::set-output name=result::$(cat a11y-results.json)"
@@ -57,7 +57,7 @@ jobs:
             echo "::set-output name=result::Error: No results file"
             echo "::set-output name=violations::0"
           fi
-      
+
       - name: Armazenar resultados como artefato
         uses: actions/upload-artifact@v3
         with:
@@ -66,7 +66,7 @@ jobs:
             a11y-results.json
             test-results/
           retention-days: 14
-      
+
       - name: Gerar relatório de acessibilidade
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v6
@@ -74,9 +74,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const violations = ${{ steps.a11y.outputs.violations }};
-            
+
             let reportBody = `## 🧐 Relatório de Acessibilidade\n\n`;
-            
+
             if (violations > 0) {
               reportBody += `⚠️ **${violations} violações de acessibilidade encontradas**\n\n`;
               reportBody += `Por favor, verifique os artefatos da execução para detalhes completos.\n\n`;
@@ -89,14 +89,14 @@ jobs:
               reportBody += `✅ **Nenhuma violação de acessibilidade encontrada!**\n\n`;
               reportBody += `Parabéns por manter altos padrões de acessibilidade.`;
             }
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: reportBody
             });
-      
+
       - name: Criar issue para violações de acessibilidade
         if: ${{ steps.a11y.outputs.violations > 0 && (github.event_name == 'push' || github.event_name == 'schedule') }}
         uses: actions/github-script@v6
@@ -104,7 +104,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const violations = ${{ steps.a11y.outputs.violations }};
-            
+
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,

@@ -3,10 +3,10 @@ name: Lighthouse Audit
 on:
   # Executa em pushes para main
   push:
-    branches: [ main ]
+    branches: [main]
   # Executa em PRs para main
   pull_request:
-    branches: [ main ]
+    branches: [main]
   # Permite execução manual
   workflow_dispatch:
   # Executa semanalmente para monitorar performance
