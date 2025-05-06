@@ -6,7 +6,7 @@
     255,
     0.65
   ); /* lighter and more transparent for overlap */
-  padding: 5rem 1rem;
+  padding: var(--space-xxl) var(--space-sm);
 }
 [data-theme='dark'] .about {
   background: rgba(34, 34, 34, 0.65);
@@ -20,12 +20,12 @@
 }
 .certifications,
 .languages {
-  margin-top: 2rem;
+  margin-top: var(--space-lg);
 }
 .certifications h3,
 .languages h3,
 .skill-card > h3 {
   color: #14508e !important;
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
+  font-size: var(--font-size-h4);
+  margin-bottom: var(--space-xs);
 }

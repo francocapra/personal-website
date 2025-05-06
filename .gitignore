@@ -17,6 +17,7 @@ test-results/
 playwright-report/
 playwright/.cache/
 playwright-screenshot.png
+screenshot-section-*.png
 
 # Build / Output directories
 dist/

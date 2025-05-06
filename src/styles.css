@@ -8,6 +8,23 @@
 :root {
   /* Light Theme (default) */
   --primary-color: #3498db;
+  /* Typographic Scale */
+  --font-size-h1: 3rem; /* Approx 48px */
+  --font-size-h2: 2.25rem; /* Approx 36px */
+  --font-size-h3: 1.75rem; /* Approx 28px */
+  --font-size-h4: 1.25rem; /* Approx 20px */
+  --font-size-p: 1rem; /* Approx 16px (Base) */
+  --font-size-small: 0.875rem; /* Approx 14px */
+
+  /* Spacing Scale */
+  --space-xxs: 0.25rem; /*  4px */
+  --space-xs: 0.5rem; /*  8px */
+  --space-sm: 1rem; /* 16px */
+  --space-md: 1.5rem; /* 24px */
+  --space-lg: 2rem; /* 32px */
+  --space-xl: 3rem; /* 48px */
+  --space-xxl: 5rem; /* 80px */
+
   --secondary-color: #2c3e50;
   --accent-color: #1abc9c;
   --text-color: #333;
@@ -64,7 +81,8 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: var(--font-size-p); /* Set base font size */
   color: var(--text-color);
   background-color: var(--bg-color);
   /* Add Fixed Background Image */
@@ -83,11 +101,10 @@ a {
   color: var(--primary-color); /* Use theme variable */
   font-weight: 500;
   transition: var(--transition);
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
 }
+
 [data-theme='dark'] a {
   color: #7ec9fa; /* Keep specific dark theme color for link */
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 a:hover {
@@ -106,10 +123,10 @@ h5,
 h6 {
   font-weight: 700;
   line-height: 1.3;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-sm);
   color: #1a1a1a; /* High contrast for light mode */
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.15);
 }
+
 [data-theme='dark'] h1,
 [data-theme='dark'] h2,
 [data-theme='dark'] h3,
@@ -117,11 +134,39 @@ h6 {
 [data-theme='dark'] h5,
 [data-theme='dark'] h6 {
   color: #f6f6f6;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+h2 {
+  font-size: var(--font-size-h2);
+}
+h3 {
+  font-size: var(--font-size-h3);
+}
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+p {
+  /* Ensure paragraphs use the base size */
+  font-size: var(--font-size-p);
+  margin-bottom: var(--space-sm); /* Add consistent spacing below paragraphs */
+}
+
+li {
+  /* Ensure list items use the base size */
+  font-size: var(--font-size-p);
+}
+
+small {
+  /* Style for smaller text if needed */
+  font-size: var(--font-size-small);
 }
 
 section {
-  padding: 5rem 1rem;
+  padding: var(--space-xxl) var(--space-md); /* 5rem 1.5rem */
   max-width: 900px;
   margin: 0 auto;
   background: var(--section-bg-overlay);
@@ -136,15 +181,14 @@ section {
 
 section h2 {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-xl); /* 3rem */
 }
 
 .btn {
   display: inline-block;
   background-color: var(--primary-color);
   color: #000000;
-  padding: 0.8rem 1.5rem;
+  padding: var(--space-xs) var(--space-md); /* ~0.5rem 1.5rem, adjusted for balance */
   border-radius: 4px;
   font-weight: 500;
   transition: var(--transition);
@@ -175,7 +219,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: var(--space-sm) var(--space-lg); /* 1rem 2rem */
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -188,7 +232,7 @@ nav {
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: var(--space-lg); /* 2rem */
 }
 
 .nav-links a {
@@ -288,7 +332,6 @@ nav {
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
   color: #232323;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
 }
 
 .certifications,
@@ -313,14 +356,12 @@ nav {
   margin-bottom: 0.5rem;
   position: relative;
   color: #232323;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
 }
 
 [data-theme='dark'] .about-text p,
 [data-theme='dark'] .certifications li,
 [data-theme='dark'] .languages li {
   color: #e0e0e0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Experience Section */
@@ -347,7 +388,6 @@ nav {
   font-size: 1.5rem;
   color: #14508e;
   margin-bottom: 0.5rem;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
 }
 
 .experience-card h4 {
@@ -361,7 +401,6 @@ nav {
   font-style: italic;
   margin-bottom: 1rem;
   color: #232323;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
 }
 
 .experience-card ul {
