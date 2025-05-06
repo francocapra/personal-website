@@ -644,3 +644,51 @@ footer {
     overflow-wrap: break-word;
   }
 }
+
+/* Dark Mode Hero Social Icon Color Fix */
+[data-theme='dark'] .hero .social-links .social-icon {
+  color: var(
+    --primary-color
+  ); /* Use dark theme's primary color for better visibility */
+}
+
+/* Dark Mode "View Full Experience" Button Fix */
+[data-theme=\'dark\'] .btn.view-more-btn {
+  background-color: var(--primary-color); /* Use a brighter blue */
+  color: #ffffff; /* Ensure text is bright white for contrast */
+}
+
+[data-theme=\'dark\'] .btn.view-more-btn:hover {
+  background-color: var(
+    --accent-color
+  ); /* Use accent color for hover, consistent with other buttons */
+}
+
+/* Dark Mode Contact Form Input Fields Fix */
+[data-theme=\'dark\\] #contact-form input,
+[data-theme=\'dark\\] #contact-form textarea {
+  background-color: var(
+    --light-bg
+  ); /* Use a slightly lighter background than the main dark bg */
+  border-color: var(--light-gray); /* Use a more visible border color */
+}
+
+[data-theme=\'dark\\] #contact-form input:focus,
+[data-theme=\'dark\\] #contact-form textarea:focus {
+  border-color: var(--primary-color); /* Keep focus color consistent */
+  box-shadow: 0 0 0 2px rgba(79, 163, 224, 0.3); /* Adjusted focus shadow for dark mode */
+}
+
+/* Dark Mode Footer Text Contrast Fix */
+[data-theme=\'dark\\] footer {
+  color: var(
+    --text-color
+  ); /* Use the general dark theme text color for better contrast */
+}
+
+/* Dark Mode Experience Timeline Accent Line Fix */
+[data-theme=\'dark\\] .experience-card li:before {
+  color: var(
+    --primary-color
+  ); /* Use a brighter blue, consistent with other dark mode accents */
+}
